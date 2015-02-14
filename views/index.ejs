@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+
+    <meta charset="utf-8">
+
+   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+       <script src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+    var x;
+    var y;
+
+  x = Math.random(1,5);
+  y = Math.random(1,5);
+ // },1000);
+     // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+     // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+       // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+ 
+        function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Topping');
+        data.addColumn('number', 'Time');
+        data.addRows([
+          [1,2]
+        ]);
+        // Set chart options
+        var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300,
+                      'is3D': true};
+
+        // Instantiate and draw our chart, passing in some options.
+      
+       var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+</script>
+</head>
+<body>
+
+    <div id = 'x'>X axis is{{ xaxis }} </div>
+    <div id = 'y'>Y axis is{{ yaxis }} </div>
+   <!--  <div id = 'z'>Z axis is {{xaxis}} </div> -->
+    <div id='chart_div'> </div>
+    <div id = 'z'> Message </div>
+
+<script>
+ var socket = io('http://localhost:3000');
+ socket.on('xaxis', function(data){
+  $('#x').html(data);
+  socket.on('yaxis', function(data){
+    $('#y').html(data);
+    // $('#chart_div').drawChart(); 
+    // socket.on('event', function(){
+    //   $('#chart_div').drawChart();
+    // });
+  });
+  });
+ </script>
+</body>
+</html>
+
+
