@@ -10,64 +10,20 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-// var Speed = mongoose.model('Speed');
-var count = 0;
-var g_velocity;
-var time;
-
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/my_database');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var x;
-var y;
-
-setInterval(function(){
-x = Math.random(1,5);
-y = Math.random(1,5);
-},1000);
 
 
 
-
-  
-
-// var db = mongoose.connect('mongodb://localhost/hackerati',function(err, db){
-//     if(!err){console.log('Connection established !!')}
-// });
-
-// setInterval(function(){
-//     Speed.findOne(function (err, speeds) {
-//   if (err) return console.error(err);
-//   g_velocity=speeds.velocity
-//   time = speeds.time
-// });
-// }, 2500)
-
-//On user connection, emit the number of users online, 
-io.on('connection',function(socket){  
-    console.log('orel connected');
-  //   count++;
-  //   if(count === 1){
-  //       io.emit('online_users', (count));
-  //   }else{
-  //       io.emit('online_users' ,(count));
-  //   };
-
-  //   socket.on('disconnect', function(){
-  //   count--;    
-  //   io.emit('online_users' ,(count));
-
-  //   //every 2.5 seconds, send new data to be graphed
-    setInterval(function(){
-    io.emit('xaxis', (x));
-    io.emit('yaxis', (y));
-    },2500);    
-  // });
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+
+    <meta charset="utf-8">
+
+   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+       <script src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+    google.load('visualization', '1');
+    function drawVisualization() {
+
+      var dataTable = [
+         ["Country", "Population Density"],
+         ["Indonesia", 117],
+         ["China", 137],
+         ["US", 142],
+         ["Pakistan", 198],
+         ["India", 336],
+         ["Japan", 339],
+         ["Bangladesh", 1045]
+       ];
+      google.visualization.drawChart({
+        "containerId": "visualization_div",
+        "dataTable": dataTable,
+        "async": true,
+        "sendMethod":'xhr',
+        "refreshInterval": 1,
+        "chartType": "Table",
+        "options": {
+          "alternatingRowStyle": true,
+          "showRowNumber" : true,
+        }
+      });
+    }
+    google.setOnLoadCallback(drawVisualization);
+  </script>
+</head>
+
+<body>
+
+    <div id = 'x'>X axis is{{ xaxis }} </div>
+    <div id = 'y'>Y axis is{{ yaxis }} </div>
+   <!--  <div id = 'z'>Z axis is {{xaxis}} </div> -->
+    <div id='visualization_div'> </div>
+    <div id = 'z'> Message </div>
+
+<script>
+ var socket = io('http://localhost:3000');
+ socket.on('xaxis', function(data){
+  $('#x').html(data);
+  socket.on('yaxis', function(data){
+    $('#y').html(data);
+    // $('#chart_div').drawChart(); 
+    // socket.on('event', function(){
+    //   $('#chart_div').drawChart();
+    // });
+  });
+  });
+ </script>
+</body>
+</html>
